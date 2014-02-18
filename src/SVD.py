@@ -16,9 +16,11 @@ class SVD():
         init = np.sqrt(average/rank)
         noise = .005
         
-        self.U = np.random.RandomState.uniform(-noise, noise, item_count*rank)\
+        #items
+        self.U = np.random.uniform(-noise, noise, item_count*rank)\
                 .reshape(item_count,rank) + init
-        self.V = np.random.RandomState.uniform(-noise,noise, user_count*rank)\
+        #users
+        self.V = np.random.uniform(-noise,noise, user_count*rank)\
                 .reshape(user_count, rank) + init
                 
     def predict(self, userid, itemid):

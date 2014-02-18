@@ -16,6 +16,3 @@ def test_tuples_to_array():
     
     np.testing.assert_array_equal(val,target, "The selected tuple data has accurately translated to a matrix")
 
-from src.SVD import SVD
-def test_SVD_init():
-    """TODO assert U and V are of correct size"""
