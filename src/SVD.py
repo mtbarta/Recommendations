@@ -1,7 +1,7 @@
 import numpy as np
 
 # implement biases-- http://arek-paterek.com/ap_kdd_poster.pdf
-class SVD():
+class SVD(object):
     def __init__(self, data, user_count, item_count, rank, learning_rate, reg):
         """data is a tuple of tuples (user, item, rating)"""
         self.data = data
@@ -11,6 +11,8 @@ class SVD():
         self.learning_rate = learning_rate
         self.reg = reg
         self.minimprove = .0001
+        self.RMSE = 0
+        
         #create average rating for initial values
         average = np.average([line[2] for line in data])
         init = np.sqrt(average/rank)
@@ -30,15 +32,12 @@ class SVD():
             prediction += self.U[userid][i] * self.V[itemid][i]
         return prediction
         
-    def train(self, data, epochs):
-        oldtrain = 0
+    def train(self, epochs):
         for epoch in range(epochs):
             train = self.train_single(self.rank -1)
-            
-            if abs(oldtrain - train) < self.minimprove:
+            if np.abs(self.RMSE - train) < self.minimprove:
                 break
-            oldtrain = train
-            
+            self.RMSE = train
         
     def train_single(self, k):
         """iterate through the data. For each rating, update the user and item factors."""
