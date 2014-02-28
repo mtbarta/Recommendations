@@ -14,3 +14,4 @@ def tuples_to_array(data):
     rating = [line[2] for line in data]
         
     return sparse.coo_matrix((rating, (user,item)))
+
