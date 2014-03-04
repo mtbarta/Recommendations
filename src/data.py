@@ -1,9 +1,3 @@
-"""
-user:recoDBuser
-db: recoDB
-pwd: recopwd
-"""
-
 import MySQLdb
 
 class Database():
