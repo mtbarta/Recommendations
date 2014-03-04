@@ -15,23 +15,24 @@ class SVD_gradients(SVD):
         self.reg_users = reg_users
         self.reg_items = reg_items          
         
-    def train_single(self, k):
+    def train_single(self):
         """iterate through the data. For each rating, update the user and item factors."""
-        
-        for userid, item, rating in self.data:
+        Sumerror = 0
+        for user, item, rating in self.data:
             itemid = item-1 # should not be hard coded
-            
-            error = .5 * (rating - self.predict(userid, itemid))**2 + \
-                    self.reg_users*.5*sum([i**2 for i in self.U[userid]]) + \
-                    self.reg_items*.5*sum([i**2 for i in self.V[itemid]])
-            
-            u_gradient = (rating - self.predict(userid,itemid)) * self.V[itemid] - \
+            userid = user-1
+
+            error = .5 * (rating - self.predict(user, item))**2 + \
+                    self.reg_users*.5*np.linalg.norm(self.U[userid]) + \
+                    self.reg_items*.5*np.linalg.norm(self.V[itemid])
+            Sumerror += error
+            u_gradient = (rating - self.predict(user,item)) * self.V[itemid] - \
                         self.U[userid] * self.reg_users
-            v_gradient = (rating - self.predict(userid,itemid)) * self.U[userid] - \
+            v_gradient = (rating - self.predict(user,item)) * self.U[userid] - \
                         self.V[itemid] * self.reg_items
             
             self.U[userid] += self.learning_rate * u_gradient
             self.V[itemid] += self.learning_rate * v_gradient
             
-        return np.sqrt(error / len(self.data))
+        return np.sqrt(Sumerror / len(self.data))
             

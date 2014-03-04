@@ -15,7 +15,8 @@ def main():
     test = ratings[85000:]
     
     from src.algorithms.SVD_gradients import SVD_gradients
-    algo =SVD_gradients(train, 943, 1682)
+    from src.algorithms.SVD import SVD
+    algo = SVD_gradients(train, 943, 1682, rank = 10)
     algo.train()
     print algo.validate(test)
 
