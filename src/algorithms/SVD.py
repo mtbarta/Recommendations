@@ -1,7 +1,7 @@
 import numpy as np
 from src.algorithms.algorithm import Algorithm
 # implement biases-- http://arek-paterek.com/ap_kdd_poster.pdf
-class SVD(object, Algorithm):
+class SVD(Algorithm):
     def __init__(self, data, user_count, item_count, rank, learning_rate, reg):
         """data is a tuple of tuples (user, item, rating)"""
         self.data = data
@@ -32,7 +32,7 @@ class SVD(object, Algorithm):
             prediction += self.U[userid][i] * self.V[itemid][i]
         return prediction
         
-    def train(self, epochs):
+    def train(self, epochs = 20):
         for epoch in range(epochs):
             train = self.train_single(self.rank -1)
             if np.abs(self.RMSE - train) < self.minimprove:
