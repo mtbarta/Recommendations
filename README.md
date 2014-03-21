@@ -8,9 +8,9 @@ This implementation uses a MySQL database to hold the data.
 
 ```Python
 #train_data: (user, item, rating) tuple
-algo = SVD_gradients(train, 943, 1682, rank = 10)
+algo = SVD_gradients(train_data, 943, 1682, rank = 10)
 algo.train()
-print algo.validate(test)
+print algo.validate(test_data)
 ```
 
 ##References
